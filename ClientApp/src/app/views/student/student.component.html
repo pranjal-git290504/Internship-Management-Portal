@@ -1,0 +1,41 @@
+<c-card>
+<table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">College</th>
+      <th scope="col">Course</th>
+      <th scope="col">YearOfStudy</th>
+      <th scope="col">Registration</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for(student of paginatedResult.data;track student.id) 
+      {
+        <tr>
+          <td>{{student.firstName + ' ' + student.lastName}}</td>
+          <td>{{student.email}}</td>
+          <td>{{student.collegeName}}</td>
+          <td>{{student.course}}</td>
+          <td>{{student.yearOfStudy}}</td>
+          <td>{{student.createdAt | date}}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <c-pagination aria-label="Page navigation example">
+    <li cPageItem>
+      <button cPageLink aria-label="Previous" class="cursor-pointer" (click)="onPageChange(paginatedResult.pageNumber - 1)" [disabled]="paginatedResult.pageNumber === 1"><span aria-hidden="true">&laquo;</span></button>
+    </li>
+    @for(i of getPages(paginatedResult.totalPages); track i)
+    {
+      <li cPageItem>
+        <a cPageLink class="cursor-pointer" (click)="onPageChange(i)">{{i}}</a>
+      </li>
+    }
+    <li cPageItem>
+      <button cPageLink aria-label="Next" class="cursor-pointer" (click)="onPageChange(paginatedResult.pageNumber + 1)" [disabled]="paginatedResult.pageNumber === paginatedResult.totalPages"><span aria-hidden="true">&raquo;</span></button>
+    </li>
+  </c-pagination>
+</c-card>

@@ -1,0 +1,95 @@
+
+<c-card>
+  <c-card-header>
+      <button cButton color="primary" size="sm" class="float-right" (click)="addModal()">Add</button>
+  </c-card-header>
+<c-card-body>
+  <table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Location</th>
+      <th scope="col">Start</th>
+      <th scope="col">End</th>
+      <th scope="col">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for(internship of paginatedResult.data;track internship.id) 
+      {
+        <tr>
+          <td>{{internship.title}}</td>
+          <td>{{internship.description}}</td>
+          <td>{{internship.location}}</td>
+          <td>{{internship.startDate | date}}</td>
+          <td>{{internship.endDate | date}}</td>
+          <td>
+            <c-button-group role="group" size="sm">
+              <button cButton color="primary" variant="outline" (click) = "updateModal(internship)">
+                <svg cIcon [name]="'cil-pencil'" [title]="'cil-pencil'"></svg>
+              </button>
+              <button cButton color="primary" variant="outline" (click) = "remove(internship.id)">
+                <svg cIcon [name]="'cil-trash'" [title]="'cil-trash'"></svg>
+              </button>
+            </c-button-group>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  <c-pagination aria-label="Page navigation example">
+    <li cPageItem>
+      <button cPageLink aria-label="Previous" class="cursor-pointer" (click)="onPageChange(paginatedResult.pageNumber - 1)" [disabled]="paginatedResult.pageNumber === 1"><span aria-hidden="true">&laquo;</span></button>
+    </li>
+    @for(i of getPages(paginatedResult.totalPages); track i)
+    {
+      <li cPageItem>
+        <a cPageLink class="cursor-pointer" (click)="onPageChange(i)">{{i}}</a>
+      </li>
+    }
+    <li cPageItem>
+      <button cPageLink aria-label="Next" class="cursor-pointer" (click)="onPageChange(paginatedResult.pageNumber + 1)" [disabled]="paginatedResult.pageNumber === paginatedResult.totalPages"><span aria-hidden="true">&raquo;</span></button>
+    </li>
+  </c-pagination>
+</c-card-body>
+</c-card>
+
+<c-modal id="liveDemoModal" [visible]="showAddEditModal" (visibleChange)="handleAddEditModalChange($event)" size="lg">
+    <c-modal-header>
+      <h5 cModalTitle>{{ internship.id > 0 ? 'Update' : 'Add'}} Internship</h5>
+      <button (click)="toggleAddEditModal()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <form cForm class="row g-3">
+        <c-col md="6">
+          <label cLabel for="inputTitle">Title</label>
+          <input cFormControl class="required" id="inputTitle" name="title" type="text" [(ngModel)]="internship.title" placeholder="Enter Title" />
+        </c-col>
+        <c-col md="6">
+          <label cLabel for="inputLocation">Location</label>
+          <input cFormControl class="required" id="inputLocation" type="text" name="location" [(ngModel)]="internship.location" placeholder="Enter Location" />
+        </c-col>
+        <c-col xs="12">
+          <label cLabel for="inputDescription">Description</label>
+          <input cFormControl class="required" id="inputDescription" name="description" [(ngModel)]="internship.description" placeholder="Enter Description" />
+        </c-col>
+        <c-col md="6">
+          <label cLabel for="inputStartDate">StartDate</label>
+          <input cFormControl class="required" id="inputStartDate" name="startDate" [(ngModel)]="internship.startDate" type="date" />
+        </c-col>
+        <c-col md="6">
+          <label cLabel for="inputEndDate">EndDate</label>
+          <input cFormControl class="required" id="inputEndDate" name="endDate" [(ngModel)]="internship.endDate" type="date"/>
+        </c-col>
+      </form>
+    </c-modal-body>
+    <c-modal-footer>
+      <button (click)="resetModel()" cButton color="secondary">
+        Close
+      </button>
+      <button cButton color="primary" (click)="save()">{{internship.id > 0 ? 'Update' : 'Add'}}</button>
+    </c-modal-footer>
+  </c-modal>
+
+  <c-toaster class="p-3" position="fixed" [placement]="placement"  />

@@ -1,0 +1,88 @@
+<div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
+  <c-container>
+    <c-row class="justify-content-center">
+      <c-col lg="7" md="9" xl="6">
+        <c-card class="mx-4">
+          <c-card-body class="p-4">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" cForm>
+              <h1>Register</h1>
+              <p class="text-body-secondary">Create your account</p>
+              
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="given-name" formControlName="firstName" cFormControl placeholder="First Name" />
+              </c-input-group>
+              <div *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid" class="text-danger mb-3">
+                <small *ngIf="registerForm.get('firstName')?.errors?.['required']">First name is required</small>
+              </div>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="family-name" formControlName="lastName" cFormControl placeholder="Last Name" />
+              </c-input-group>
+              <div *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid" class="text-danger mb-3">
+                <small *ngIf="registerForm.get('lastName')?.errors?.['required']">Last name is required</small>
+              </div>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilUser"></svg>
+                </span>
+                <input autoComplete="username" formControlName="username" cFormControl placeholder="Username" />
+              </c-input-group>
+              <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.invalid" class="text-danger mb-3">
+                <small *ngIf="registerForm.get('username')?.errors?.['required']">Username is required</small>
+                <small *ngIf="registerForm.get('username')?.errors?.['minlength']">Username must be at least 3 characters</small>
+              </div>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>&#64;</span>
+                <input autoComplete="email" formControlName="email" cFormControl placeholder="Email" type="email" />
+              </c-input-group>
+              <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="text-danger mb-3">
+                <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</small>
+                <small *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</small>
+              </div>
+
+              <c-input-group class="mb-3">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input autoComplete="new-password" formControlName="password" cFormControl placeholder="Password" type="password" />
+              </c-input-group>
+              <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="text-danger mb-3">
+                <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</small>
+                <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters</small>
+              </div>
+
+              <c-input-group class="mb-4">
+                <span cInputGroupText>
+                  <svg cIcon name="cilLockLocked"></svg>
+                </span>
+                <input autoComplete="new-password" formControlName="confirmPassword" cFormControl placeholder="Repeat password" type="password" />
+              </c-input-group>
+              <div *ngIf="registerForm.get('confirmPassword')?.touched && (registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch'])" class="text-danger mb-3">
+                <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Please confirm your password</small>
+                <small *ngIf="registerForm.errors?.['mismatch']">Passwords do not match</small>
+              </div>
+
+              <div class="d-grid">
+                <button cButton color="success" type="submit" [disabled]="registerForm.invalid || isLoading">
+                  {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+                </button>
+              </div>
+
+              <div class="text-center mt-3">
+                <a routerLink="/login">Already have an account? Login</a>
+              </div>
+            </form>
+          </c-card-body>
+        </c-card>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

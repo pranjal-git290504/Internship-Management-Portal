@@ -1,0 +1,3 @@
+ALTER TABLE [User]
+ADD ResetToken NVARCHAR(100) NULL,
+    ResetTokenExpiry DATETIME NULL; 

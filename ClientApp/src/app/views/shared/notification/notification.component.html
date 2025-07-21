@@ -1,0 +1,23 @@
+    <!-- <c-toast-header [closeButton]="closeButton">
+      <svg class="rounded me-2" focusable="false" height="20" preserveAspectRatio="xMidYMid slice"
+           role="img" width="20" xmlns="http://www.w3.org/2000/svg">
+        <rect fill="#007aff" height="100%" width="100%"></rect>
+      </svg>
+      <strong>{{ title }}</strong>
+    </c-toast-header>
+    <c-toast-body #toastBody [cToastClose]="toastBody.toast">
+      <p class="mb-1">This is a dynamic toast no {{ toastBody.toast?.index }} {{ toastBody.toast?.clock }}</p>
+      <ng-content />
+      <c-progress thin [value]="25*(toastBody.toast?.clock ?? 1)" />
+    </c-toast-body> -->
+  <ng-container>
+    <c-toast #toast="cToast" [autohide]="autohide" [visible]="visible" class="align-items-center text-white"  color="{{color}}">
+      <div class="d-flex">
+        <c-toast-body>
+          <span>{{content}}</span>
+        </c-toast-body>
+        <button aria-label="close" cButtonClose class="me-2 m-auto" (click)="visible=false"></button>
+      </div>
+    </c-toast>
+    </ng-container>
+  
